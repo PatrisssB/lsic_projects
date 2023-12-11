@@ -10,6 +10,13 @@ module seg7
   output wire [6:0] sec2,
   output wire [6:0] min1,
   output wire [6:0] min2
+
+  // Memory ports
+  input [7:0] mem_data_read,
+  input mem_read,
+  input [7:0] mem_data_write,
+  input mem_write,
+  input [7:0] mem_address
 );
 
   reg [31:0] count_reg, count_nxt;
@@ -19,6 +26,7 @@ module seg7
   reg [6:0] min2_reg, min2_nxt, min2_7;
   reg tick_reg, tick_nxt;
   reg [3:0] state_reg, state_nxt;
+  reg [7:0] memory [0:1023];  // 2-port memory with 1024 locations of 8 bits each
 
 assign tick = tick_reg;
 assign sec1 = sec1_7;
@@ -29,6 +37,11 @@ assign min2 = min2_7;
 localparam IDLE = 2'b00;
 localparam START = 2'b01;
 localparam PAUSE = 2'b10;
+
+localparam IDLE_M = 8'b0001000;
+localparam START_M = 8'b0001001;
+localparam PAUSE_M = 8'b0001010;
+localparam WRITE_M = 8'b1000000;
 
 always @* 
 begin
@@ -73,6 +86,19 @@ begin
           end
     end 	
 
+  opcode = mem_data_read;
+  case (opcode)
+    //should i have the previous upcodes too? 
+    //write the current timer value to memory
+    WRITE_M:  
+    begin
+      if (state_reg == PAUSE) 
+      begin
+        memory[mem_address] <= count_reg;
+      end
+    end
+  endcase
+
   case (state_reg)
     IDLE: 
     begin
@@ -85,6 +111,9 @@ begin
 
     START: 
     begin
+    //opcode = mem_data_read;
+    //if opcode = PAUSE_M
+    
       if (count_nxt == 50_000_000) 
       begin
         count_nxt = 'b0;
@@ -104,6 +133,8 @@ begin
       begin
         state_nxt = IDLE;
       end
+
+      ////////////////////////////
     end
 
     PAUSE: 
@@ -195,7 +226,6 @@ begin
             min2_reg <= 'b0;
 		tick_reg <= 1'b0;
     state_reg <= IDLE;
-
 	end 
 	else 
 	begin
@@ -206,6 +236,15 @@ begin
             min2_reg <= min2_nxt;
 		tick_reg <= tick_nxt;
     state_reg <= state_nxt;
+
+    // Memory write operation
+      if (mem_write)
+        memory[mem_address] <= mem_data_write;
+
+      // Memory read operation
+      if (mem_read)
+        mem_data_read <= memory[mem_address];
+
 	end
 end
 endmodule
