@@ -1,9 +1,15 @@
-module counter#(parameter CLOCK_CYCLES = 50_000_000) 
+module counter#(parameter CLOCK_CYCLES = 50_000_000, MEM_SIZE = 1024, MEM_WIDTH = 8) 
 (
     input clk, rst,
-    input start, pause,
     output wire tick,
-    output wire [3:0] unit_tick
+    output wire [3:0] unit_tick,
+    
+    // memory ports
+    input [MEM_WIDTH-1:0] mem_data_read,
+    input mem_read,
+    input [MEM_WIDTH-1:0] mem_data_write,
+    input mem_write,
+    input [MEM_WIDTH-1:0] mem_address
 );
 
 reg [31:0] counter_reg, counter_nxt;
@@ -25,49 +31,66 @@ begin
     unit_tick_nxt = unit_tick_reg;
     state_nxt = state_reg;
     
+    // memo read op
+    if (mem_read)
+    begin
+        case (mem_address)
+            // ...
+            default: 
+                state_nxt = state_reg;
+        endcase
+    end
+    
     case (state_reg)
-      IDLE: 
-      begin
-        unit_tick_nxt = 8'b0;
-        tick_nxt = 0;
-        if (start && !pause) 
+        IDLE: 
         begin
-          state_nxt = START;
+            unit_tick_nxt = 8'b0;
+            tick_nxt = 0;
+            if (state_reg == START) 
+            begin
+                state_nxt = START;
+            end
         end
-      end
       
-      START: begin
-        if (counter_reg == CLOCK_CYCLES - 1) 
-        begin
-          counter_nxt = 'b0;
-          tick_nxt = 1'b1;
-	        unit_tick_nxt = unit_tick_reg + 8'b1;
-        end 
-        else 
-        begin
-          counter_nxt = counter_reg + 1'b1;
-          tick_nxt = 1'b0;
+        START: begin
+            if (counter_reg == CLOCK_CYCLES - 1) 
+            begin
+                counter_nxt = 'b0;
+                tick_nxt = 1'b1;
+                unit_tick_nxt = unit_tick_reg + 8'b1;
+            end 
+            else 
+            begin
+                counter_nxt = counter_reg + 1'b1;
+                tick_nxt = 1'b0;
+            end
+            
+            if (start & pause) 
+            begin
+                state_nxt = PAUSE;
+                
+                // mem write op when PAUSE opcode is seen
+                if (mem_write && (mem_address == 2'b10 )) //pause opcode address
+                begin
+                    memory[mem_address] <= counter_reg;
+                end
+            end
+            
+            if (!start && !pause) 
+            begin
+                state_nxt = IDLE;
+            end
         end
-        
-        if (start & pause) 
-        begin
-          state_nxt = PAUSE;
-        end
-	
-        if (!start && !pause) 
-        begin
-          state_nxt = IDLE;
-        end
-      end
       
-      PAUSE: begin
-        counter_nxt = counter_reg;
-        unit_tick_nxt = unit_tick_reg;
-        if (start && !pause) 
+        PAUSE: 
         begin
-          state_nxt = START;
+            counter_nxt = counter_reg;
+            unit_tick_nxt = unit_tick_reg;
+            if (start && !pause) 
+            begin
+                state_nxt = START;
+            end
         end
-      end
     endcase
 end
 
@@ -89,4 +112,3 @@ begin
     end
 end
 endmodule
-
