@@ -1,0 +1,6 @@
+
+State Machine - |top|counter:counter1|state_ff
+Name state_ff.IDLE state_ff.PAUSE state_ff.START 
+state_ff.IDLE 0 0 0 
+state_ff.START 1 0 1 
+state_ff.PAUSE 1 1 0 

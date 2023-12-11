@@ -1,0 +1,153 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "segment1[0]",
+					"strict" : false
+				},
+				{
+					"name" : "segment1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "segment1[2]",
+					"strict" : false
+				},
+				{
+					"name" : "segment1[3]",
+					"strict" : false
+				},
+				{
+					"name" : "segment1[4]",
+					"strict" : false
+				},
+				{
+					"name" : "segment1[5]",
+					"strict" : false
+				},
+				{
+					"name" : "segment1[6]",
+					"strict" : false
+				},
+				{
+					"name" : "segment1[7]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[0]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[1]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[2]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[3]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[4]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[5]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "segment2[7]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[0]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[1]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[2]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[3]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[4]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[5]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[6]",
+					"strict" : false
+				},
+				{
+					"name" : "segment3[7]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[0]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[1]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[2]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[3]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[4]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[5]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[6]",
+					"strict" : false
+				},
+				{
+					"name" : "segment4[7]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "pause",
+					"strict" : false
+				},
+				{
+					"name" : "start",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

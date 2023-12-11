@@ -1,0 +1,141 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "tick",
+					"strict" : false
+				},
+				{
+					"name" : "sec1[0]",
+					"strict" : false
+				},
+				{
+					"name" : "sec1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "sec1[2]",
+					"strict" : false
+				},
+				{
+					"name" : "sec1[3]",
+					"strict" : false
+				},
+				{
+					"name" : "sec1[4]",
+					"strict" : false
+				},
+				{
+					"name" : "sec1[5]",
+					"strict" : false
+				},
+				{
+					"name" : "sec1[6]",
+					"strict" : false
+				},
+				{
+					"name" : "sec2[0]",
+					"strict" : false
+				},
+				{
+					"name" : "sec2[1]",
+					"strict" : false
+				},
+				{
+					"name" : "sec2[2]",
+					"strict" : false
+				},
+				{
+					"name" : "sec2[3]",
+					"strict" : false
+				},
+				{
+					"name" : "sec2[4]",
+					"strict" : false
+				},
+				{
+					"name" : "sec2[5]",
+					"strict" : false
+				},
+				{
+					"name" : "sec2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "min1[0]",
+					"strict" : false
+				},
+				{
+					"name" : "min1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "min1[2]",
+					"strict" : false
+				},
+				{
+					"name" : "min1[3]",
+					"strict" : false
+				},
+				{
+					"name" : "min1[4]",
+					"strict" : false
+				},
+				{
+					"name" : "min1[5]",
+					"strict" : false
+				},
+				{
+					"name" : "min1[6]",
+					"strict" : false
+				},
+				{
+					"name" : "min2[0]",
+					"strict" : false
+				},
+				{
+					"name" : "min2[1]",
+					"strict" : false
+				},
+				{
+					"name" : "min2[2]",
+					"strict" : false
+				},
+				{
+					"name" : "min2[3]",
+					"strict" : false
+				},
+				{
+					"name" : "min2[4]",
+					"strict" : false
+				},
+				{
+					"name" : "min2[5]",
+					"strict" : false
+				},
+				{
+					"name" : "min2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "pause",
+					"strict" : false
+				},
+				{
+					"name" : "start",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,6 @@
+
+State Machine - |seg7|state_reg
+Name state_reg.IDLE state_reg.PAUSE state_reg.START 
+state_reg.IDLE 0 0 0 
+state_reg.START 1 0 1 
+state_reg.PAUSE 1 1 0 

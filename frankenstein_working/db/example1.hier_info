@@ -1,0 +1,301 @@
+|top
+clk => clk.IN5
+rst => rst.IN5
+start => start.IN1
+pause => pause.IN1
+segment1[0] <= segment:display_sec1.BCD_OUT
+segment1[1] <= segment:display_sec1.BCD_OUT
+segment1[2] <= segment:display_sec1.BCD_OUT
+segment1[3] <= segment:display_sec1.BCD_OUT
+segment1[4] <= segment:display_sec1.BCD_OUT
+segment1[5] <= segment:display_sec1.BCD_OUT
+segment1[6] <= segment:display_sec1.BCD_OUT
+segment1[7] <= segment:display_sec1.BCD_OUT
+segment2[0] <= segment:display_sec2.BCD_OUT
+segment2[1] <= segment:display_sec2.BCD_OUT
+segment2[2] <= segment:display_sec2.BCD_OUT
+segment2[3] <= segment:display_sec2.BCD_OUT
+segment2[4] <= segment:display_sec2.BCD_OUT
+segment2[5] <= segment:display_sec2.BCD_OUT
+segment2[6] <= segment:display_sec2.BCD_OUT
+segment2[7] <= segment:display_sec2.BCD_OUT
+segment3[0] <= segment:display_min1.BCD_OUT
+segment3[1] <= segment:display_min1.BCD_OUT
+segment3[2] <= segment:display_min1.BCD_OUT
+segment3[3] <= segment:display_min1.BCD_OUT
+segment3[4] <= segment:display_min1.BCD_OUT
+segment3[5] <= segment:display_min1.BCD_OUT
+segment3[6] <= segment:display_min1.BCD_OUT
+segment3[7] <= segment:display_min1.BCD_OUT
+segment4[0] <= segment:display_min2.BCD_OUT
+segment4[1] <= segment:display_min2.BCD_OUT
+segment4[2] <= segment:display_min2.BCD_OUT
+segment4[3] <= segment:display_min2.BCD_OUT
+segment4[4] <= segment:display_min2.BCD_OUT
+segment4[5] <= segment:display_min2.BCD_OUT
+segment4[6] <= segment:display_min2.BCD_OUT
+segment4[7] <= segment:display_min2.BCD_OUT
+
+
+|top|counter:counter1
+clk => unit_tick_ff[0].CLK
+clk => unit_tick_ff[1].CLK
+clk => unit_tick_ff[2].CLK
+clk => unit_tick_ff[3].CLK
+clk => unit_tick_ff[4].CLK
+clk => unit_tick_ff[5].CLK
+clk => unit_tick_ff[6].CLK
+clk => unit_tick_ff[7].CLK
+clk => tick_ff.CLK
+clk => counter_ff[0].CLK
+clk => counter_ff[1].CLK
+clk => counter_ff[2].CLK
+clk => counter_ff[3].CLK
+clk => counter_ff[4].CLK
+clk => counter_ff[5].CLK
+clk => counter_ff[6].CLK
+clk => counter_ff[7].CLK
+clk => counter_ff[8].CLK
+clk => counter_ff[9].CLK
+clk => counter_ff[10].CLK
+clk => counter_ff[11].CLK
+clk => counter_ff[12].CLK
+clk => counter_ff[13].CLK
+clk => counter_ff[14].CLK
+clk => counter_ff[15].CLK
+clk => counter_ff[16].CLK
+clk => counter_ff[17].CLK
+clk => counter_ff[18].CLK
+clk => counter_ff[19].CLK
+clk => counter_ff[20].CLK
+clk => counter_ff[21].CLK
+clk => counter_ff[22].CLK
+clk => counter_ff[23].CLK
+clk => counter_ff[24].CLK
+clk => counter_ff[25].CLK
+clk => counter_ff[26].CLK
+clk => counter_ff[27].CLK
+clk => counter_ff[28].CLK
+clk => counter_ff[29].CLK
+clk => counter_ff[30].CLK
+clk => counter_ff[31].CLK
+clk => state_ff~1.DATAIN
+rst => unit_tick_ff[0].ACLR
+rst => unit_tick_ff[1].ACLR
+rst => unit_tick_ff[2].ACLR
+rst => unit_tick_ff[3].ACLR
+rst => unit_tick_ff[4].ACLR
+rst => unit_tick_ff[5].ACLR
+rst => unit_tick_ff[6].ACLR
+rst => unit_tick_ff[7].ACLR
+rst => tick_ff.ACLR
+rst => counter_ff[0].ACLR
+rst => counter_ff[1].ACLR
+rst => counter_ff[2].ACLR
+rst => counter_ff[3].ACLR
+rst => counter_ff[4].ACLR
+rst => counter_ff[5].ACLR
+rst => counter_ff[6].ACLR
+rst => counter_ff[7].ACLR
+rst => counter_ff[8].ACLR
+rst => counter_ff[9].ACLR
+rst => counter_ff[10].ACLR
+rst => counter_ff[11].ACLR
+rst => counter_ff[12].ACLR
+rst => counter_ff[13].ACLR
+rst => counter_ff[14].ACLR
+rst => counter_ff[15].ACLR
+rst => counter_ff[16].ACLR
+rst => counter_ff[17].ACLR
+rst => counter_ff[18].ACLR
+rst => counter_ff[19].ACLR
+rst => counter_ff[20].ACLR
+rst => counter_ff[21].ACLR
+rst => counter_ff[22].ACLR
+rst => counter_ff[23].ACLR
+rst => counter_ff[24].ACLR
+rst => counter_ff[25].ACLR
+rst => counter_ff[26].ACLR
+rst => counter_ff[27].ACLR
+rst => counter_ff[28].ACLR
+rst => counter_ff[29].ACLR
+rst => counter_ff[30].ACLR
+rst => counter_ff[31].ACLR
+rst => state_ff~3.DATAIN
+start => always0.IN0
+start => always0.IN0
+start => always0.IN0
+pause => always0.IN1
+pause => always0.IN1
+pause => always0.IN1
+tick <= tick_ff.DB_MAX_OUTPUT_PORT_TYPE
+unit_tick[0] <= unit_tick_ff[0].DB_MAX_OUTPUT_PORT_TYPE
+unit_tick[1] <= unit_tick_ff[1].DB_MAX_OUTPUT_PORT_TYPE
+unit_tick[2] <= unit_tick_ff[2].DB_MAX_OUTPUT_PORT_TYPE
+unit_tick[3] <= unit_tick_ff[3].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|timer:second_counter1
+clk => tick_ff.CLK
+clk => count_ff[0].CLK
+clk => count_ff[1].CLK
+clk => count_ff[2].CLK
+clk => count_ff[3].CLK
+rst => tick_ff.ACLR
+rst => count_ff[0].ACLR
+rst => count_ff[1].ACLR
+rst => count_ff[2].ACLR
+rst => count_ff[3].ACLR
+enable => tick_ff.ENA
+enable => count_ff[3].ENA
+enable => count_ff[2].ENA
+enable => count_ff[1].ENA
+enable => count_ff[0].ENA
+display_time_digit[0] <= count_ff[0].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[1] <= count_ff[1].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[2] <= count_ff[2].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[3] <= count_ff[3].DB_MAX_OUTPUT_PORT_TYPE
+tick <= tick_ff.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|timer:second_counter2
+clk => tick_ff.CLK
+clk => count_ff[0].CLK
+clk => count_ff[1].CLK
+clk => count_ff[2].CLK
+clk => count_ff[3].CLK
+rst => tick_ff.ACLR
+rst => count_ff[0].ACLR
+rst => count_ff[1].ACLR
+rst => count_ff[2].ACLR
+rst => count_ff[3].ACLR
+enable => tick_ff.ENA
+enable => count_ff[3].ENA
+enable => count_ff[2].ENA
+enable => count_ff[1].ENA
+enable => count_ff[0].ENA
+display_time_digit[0] <= count_ff[0].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[1] <= count_ff[1].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[2] <= count_ff[2].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[3] <= count_ff[3].DB_MAX_OUTPUT_PORT_TYPE
+tick <= tick_ff.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|timer:minute_counter1
+clk => tick_ff.CLK
+clk => count_ff[0].CLK
+clk => count_ff[1].CLK
+clk => count_ff[2].CLK
+clk => count_ff[3].CLK
+rst => tick_ff.ACLR
+rst => count_ff[0].ACLR
+rst => count_ff[1].ACLR
+rst => count_ff[2].ACLR
+rst => count_ff[3].ACLR
+enable => tick_ff.ENA
+enable => count_ff[3].ENA
+enable => count_ff[2].ENA
+enable => count_ff[1].ENA
+enable => count_ff[0].ENA
+display_time_digit[0] <= count_ff[0].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[1] <= count_ff[1].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[2] <= count_ff[2].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[3] <= count_ff[3].DB_MAX_OUTPUT_PORT_TYPE
+tick <= tick_ff.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|timer:minute_counter2
+clk => tick_ff.CLK
+clk => count_ff[0].CLK
+clk => count_ff[1].CLK
+clk => count_ff[2].CLK
+clk => count_ff[3].CLK
+rst => tick_ff.ACLR
+rst => count_ff[0].ACLR
+rst => count_ff[1].ACLR
+rst => count_ff[2].ACLR
+rst => count_ff[3].ACLR
+enable => tick_ff.ENA
+enable => count_ff[3].ENA
+enable => count_ff[2].ENA
+enable => count_ff[1].ENA
+enable => count_ff[0].ENA
+display_time_digit[0] <= count_ff[0].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[1] <= count_ff[1].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[2] <= count_ff[2].DB_MAX_OUTPUT_PORT_TYPE
+display_time_digit[3] <= count_ff[3].DB_MAX_OUTPUT_PORT_TYPE
+tick <= tick_ff.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|segment:display_sec1
+BCD[0] => Decoder1.IN3
+BCD[1] => Decoder0.IN2
+BCD[1] => Decoder1.IN2
+BCD[2] => Decoder0.IN1
+BCD[2] => Decoder1.IN1
+BCD[3] => Decoder0.IN0
+BCD[3] => Decoder1.IN0
+BCD_OUT[0] <= WideOr7.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[1] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[2] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[3] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[4] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[5] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[6] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[7] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|segment:display_sec2
+BCD[0] => Decoder1.IN3
+BCD[1] => Decoder0.IN2
+BCD[1] => Decoder1.IN2
+BCD[2] => Decoder0.IN1
+BCD[2] => Decoder1.IN1
+BCD[3] => Decoder0.IN0
+BCD[3] => Decoder1.IN0
+BCD_OUT[0] <= WideOr7.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[1] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[2] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[3] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[4] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[5] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[6] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[7] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|segment:display_min1
+BCD[0] => Decoder1.IN3
+BCD[1] => Decoder0.IN2
+BCD[1] => Decoder1.IN2
+BCD[2] => Decoder0.IN1
+BCD[2] => Decoder1.IN1
+BCD[3] => Decoder0.IN0
+BCD[3] => Decoder1.IN0
+BCD_OUT[0] <= WideOr7.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[1] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[2] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[3] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[4] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[5] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[6] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[7] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top|segment:display_min2
+BCD[0] => Decoder1.IN3
+BCD[1] => Decoder0.IN2
+BCD[1] => Decoder1.IN2
+BCD[2] => Decoder0.IN1
+BCD[2] => Decoder1.IN1
+BCD[3] => Decoder0.IN0
+BCD[3] => Decoder1.IN0
+BCD_OUT[0] <= WideOr7.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[1] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[2] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[3] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[4] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[5] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[6] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+BCD_OUT[7] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+
