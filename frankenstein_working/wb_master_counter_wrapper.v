@@ -15,6 +15,7 @@ module wb_master_counter_wrapper
   output wire [31:0] wb_dat_o,
   output wire wb_ack_o
 );
+
   wire [3:0] counter_tick;
 
   counter #(.CLOCK_CYCLES(50_000_000)) counter_inst 

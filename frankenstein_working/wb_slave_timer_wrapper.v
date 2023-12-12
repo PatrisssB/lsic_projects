@@ -1,4 +1,5 @@
-module wb_slave_timer_wrapper (
+module wb_slave_timer_wrapper 
+(
   input wire clk,
   input wire rst,
   input wire enable,
@@ -15,7 +16,8 @@ module wb_slave_timer_wrapper (
 );
   wire [3:0] timer_tick;
 
-  timer #(.MAX(10)) timer_inst (
+  timer #(.MAX(10)) timer_inst 
+  (
     .clk(clk),
     .rst(rst),
     .enable(enable),

@@ -6,16 +6,32 @@ module counter#(parameter CLOCK_CYCLES = 50_000_000, MEM_SIZE = 1024, MEM_WIDTH 
     
     // memory ports
     input [MEM_WIDTH-1:0] mem_data_read,
-    input mem_read,
+    input mem_read, //enable read
     input [MEM_WIDTH-1:0] mem_data_write,
-    input mem_write,
+    input mem_write, //enable write
     input [MEM_WIDTH-1:0] mem_address
 );
+
+
+//task: when you press PAUSE the value that is remained, please store it in the memory 
+//the previous acction witll need to have the address increasead 
+//in the case: zm m zs s -> it should be concatenated and the whole value it should be stored into the meomory
+//when STOP is pressed, then you should read ALL the values stored in the memory
+//there can be dislayed like: from top-bottom or bottom/-top, all the values are shown one after another
+//the other method can associate a button to make it go throgh them pressing each time
+//optional stuff(not so optional for me:))))) 
+//it requires the usage of another memory that will store the operations that we did, basicalyy the upcode 
+//also it can store the operation done/upcode and the value 
+//use the 2nd memory as the control unit of the stopwatch that should have a list of the instructions that would control the stopwatch itself
+
 
 reg [31:0] counter_reg, counter_nxt;
 reg [7:0] unit_tick_reg, unit_tick_nxt;
 reg tick_reg, tick_nxt;
 reg [3:0] state_reg, state_nxt;
+
+//for the adding the given memory module, there is an instantiation needed of the module
+//then it should be modified 
 
 localparam IDLE = 2'b00;
 localparam START = 2'b01;
