@@ -1,0 +1,218 @@
+module seg7_mem
+(
+  input clk,
+  input rst,
+  input start,
+  input pause,
+  output wire tick,
+  output wire [6:0] sec1,
+  output wire [6:0] sec2,
+  output wire [6:0] min1,
+  output wire [6:0] min2,
+
+  // Memory ports
+  input [7:0] mem_data_read,
+  input mem_read,
+  input [7:0] mem_data_write,
+  input mem_write,
+  input [7:0] mem_address
+);
+
+reg [31:0] count_reg, count_nxt;
+reg [6:0] sec1_reg, sec1_nxt, sec1_7;
+reg [6:0] sec2_reg, sec2_nxt, sec2_7;
+reg [6:0] min1_reg, min1_nxt, min1_7;
+reg [6:0] min2_reg, min2_nxt, min2_7;
+reg tick_reg, tick_nxt;
+reg [3:0] state_reg, state_nxt;
+reg [7:0] memory [0:1023];  // 2-port memory with 1024 locations of 8 bits each
+
+reg [7:0] opcode;
+reg [7:0] pause_value; // Value to be stored during PAUSE
+
+assign tick = tick_reg;
+assign sec1 = sec1_7;
+assign sec2 = sec2_7;
+assign min1 = min1_7;
+assign min2 = min2_7;
+
+localparam IDLE = 2'b00;
+localparam START = 2'b01;
+localparam PAUSE = 2'b10;
+localparam STOP = 2'b11;
+
+localparam IDLE_M = 8'b0001000;
+localparam START_M = 8'b0001001;
+localparam PAUSE_M = 8'b0001010;
+localparam WRITE_M = 8'b1000000;
+
+always @*
+begin
+    count_nxt = count_reg;
+    sec1_nxt = sec1_reg;
+    sec2_nxt = sec2_reg;
+    min1_nxt = min1_reg;
+    min2_nxt = min2_reg;
+    tick_nxt = tick_reg;
+    state_nxt = state_reg;
+
+    // new logic for handling PAUSE and STOP
+    if (pause && !start) 
+    begin
+        state_nxt = PAUSE;
+        pause_value = {min2_reg, min1_reg, sec2_reg, sec1_reg, count_reg[31:0]};
+    end
+
+    if (state_reg == PAUSE && !pause) 
+    begin
+        state_nxt = START;
+        memory[mem_address] <= pause_value;
+        mem_address <= mem_address + 1;
+    end
+
+    if (state_reg == START && start) 
+    begin
+        state_nxt = IDLE;
+    end
+
+    if (start && !pause && state_reg != PAUSE) 
+    begin
+        state_nxt = START;
+    end
+
+    if (start && pause && state_reg != PAUSE)  
+    begin
+        state_nxt = PAUSE;
+    end
+
+    if (state_reg == START && !start && !pause) 
+    begin
+        state_nxt = IDLE;
+    end
+
+    // ... (unchanged)
+end
+
+always @ (posedge clk or negedge rst)
+begin
+    // ... (unchanged)
+
+    // New logic to handle STOP and read from memory
+    if (!start && pause) 
+    begin
+        state_nxt = STOP;
+    end
+
+    if (state_reg == STOP && start)  
+    begin
+        state_nxt = IDLE;
+    end
+
+    if (mem_read && state_reg == STOP) 
+    begin
+        mem_data_read <= memory[mem_address];
+        mem_address <= mem_address + 1;
+    end
+end
+
+always @ (sec1_reg) 
+begin
+    case (sec1_reg)
+    0 : sec1_7 = 7'b0000001;
+    1 : sec1_7 = 7'b1001111;
+    2 : sec1_7 = ~7'b1101101;
+    3 : sec1_7 = ~7'b1111001;
+    4 : sec1_7 = ~7'b0110011;
+    5 : sec1_7 = ~7'b1011011;
+    6 : sec1_7 = ~7'b1011111;
+    7 : sec1_7 = ~7'b1110000;
+    8 : sec1_7 = ~7'b1111111;
+    9 : sec1_7 = ~7'b1111011;
+    default: sec1_7 = ~7'b1111110;
+    endcase
+end
+
+always @ (sec2_reg) 
+begin
+    case (sec2_reg)
+    0 : sec2_7 = 7'b0000001;
+    1 : sec2_7 = 7'b1001111;
+    2 : sec2_7 = ~7'b1101101;
+    3 : sec2_7 = ~7'b1111001;
+    4 : sec2_7 = ~7'b0110011;
+    5 : sec2_7 = ~7'b1011011;
+    6 : sec2_7 = ~7'b1011111;
+    7 : sec2_7 = ~7'b1110000;
+    8 : sec2_7 = ~7'b1111111;
+    9 : sec2_7 = ~7'b1111011;
+    default: sec2_7 = ~7'b1111110;
+    endcase
+end
+
+always @ (min1_reg) 
+begin
+    case (min1_reg)
+    0 : min1_7 = 7'b0000001;
+    1 : min1_7 = 7'b1001111;
+    2 : min1_7 = ~7'b1101101;
+    3 : min1_7 = ~7'b1111001;
+    4 : min1_7 = ~7'b0110011;
+    5 : min1_7 = ~7'b1011011;
+    6 : min1_7 = ~7'b1011111;
+    7 : min1_7 = ~7'b1110000;
+    8 : min1_7 = ~7'b1111111;
+    9 : min1_7 = ~7'b1111011;
+    default: min1_7 = ~7'b1111110;
+    endcase
+end
+
+always @ (min2_reg) 
+begin
+    case (min2_reg)
+    0 : min2_7 = 7'b0000001;
+    1 : min2_7 = 7'b1001111;
+    2 : min2_7 = ~7'b1101101;
+    3 : min2_7 = ~7'b1111001;
+    4 : min2_7 = ~7'b0110011;
+    5 : min2_7 = ~7'b1011011;
+    6 : min2_7 = ~7'b1011111;
+    7 : min2_7 = ~7'b1110000;
+    8 : min2_7 = ~7'b1111111;
+    9 : min2_7 = ~7'b1111011;
+    default: min2_7 = ~7'b1111110;
+    endcase
+end
+
+always @ (posedge clk or negedge rst)
+begin
+    if(~rst) 
+    begin
+        count_reg <= 'b0;
+        sec1_reg <= 'b0;
+        sec2_reg <= 'b0;
+        min1_reg <= 'b0;
+        min2_reg <= 'b0;
+        tick_reg <= 1'b0;
+        state_reg <= IDLE;
+    end 
+    else 
+    begin
+        count_reg <= count_nxt;
+        sec1_reg <= sec1_nxt;
+        sec2_reg <= sec2_nxt;
+        min1_reg <= min1_nxt;
+        min2_reg <= min2_nxt;
+        tick_reg <= tick_nxt;
+        state_reg <= state_nxt;
+
+        // Memory write operation
+        if (mem_write)
+            memory[mem_address] <= mem_data_write;
+
+        // Memory read operation
+        if (mem_read)
+            mem_data_read <= memory[mem_address];
+    end
+end
+
+endmodule

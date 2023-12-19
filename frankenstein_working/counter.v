@@ -14,7 +14,7 @@ module counter#(parameter CLOCK_CYCLES = 50_000_000, MEM_SIZE = 1024, MEM_WIDTH 
 
 
 //task: when you press PAUSE the value that is remained, please store it in the memory 
-//the previous acction witll need to have the address increasead 
+//the previous acction will need to have the address increasead 
 //in the case: zm m zs s -> it should be concatenated and the whole value it should be stored into the meomory
 //when STOP is pressed, then you should read ALL the values stored in the memory
 //there can be dislayed like: from top-bottom or bottom/-top, all the values are shown one after another
