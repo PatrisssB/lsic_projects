@@ -1,6 +1,7 @@
 module counter_memory
 (
     input clk, rst,
+    input start, pause, stop, 
     output wire tick,
     output wire [3:0] unit_tick,
     
@@ -15,6 +16,7 @@ module counter_memory
 localparam IDLE = 2'b00;
 localparam START = 2'b01;
 localparam PAUSE = 2'b10;
+localparam STOP = 2'b11;
 
 reg [31:0] counter_reg, counter_nxt;
 reg [7:0] unit_tick_reg, unit_tick_nxt;
@@ -68,10 +70,22 @@ begin
     if (mem_read)
     begin
         case (mem_address)
-            8'b0000_1000: // Read from pause address
-                mem_data_read <= mem_inst.data_out;
-            // are they any other cases needed for memory reads?
+            8'b0000_0000: // Read from pause address
+                assign mem_data_read = mem_inst.data_out;
+                mem_address = mem_address + 1;
             default: 
+                state_nxt = state_reg;
+        endcase
+    end
+
+    if (stop)
+    begin
+        case (mem_address)
+            8'b0000_0000: // Read from pause address
+                mem_data_read = mem_inst.data_out;
+                mem_address = mem_address + 1;
+            default:
+                // Handle other memory addresses if needed
                 state_nxt = state_reg;
         endcase
     end
@@ -101,17 +115,17 @@ begin
                 tick_nxt = 1'b0;
             end
             
-            if (mem_write && (mem_address == 8'b0000_1000)) // pause address
+            if (mem_write && (mem_address == 8'b0000_0000)) // pause address
             begin
                 mem_inst.mem_data_write <= counter_reg;
             end
 
-            if (start & pause) 
+            if (start & pause)  //ERROR
             begin
                 state_nxt = PAUSE;
             end
             
-            if (!start && !pause) 
+            if (!start && !pause)  //ERROR
             begin
                 state_nxt = IDLE;
             end
@@ -120,11 +134,16 @@ begin
         PAUSE: 
         begin
             counter_nxt = counter_reg;
-            unit_tick_nxt = unit_tick_reg;
-            if (start && !pause) 
+            unit_tick_nxt = unit_tick_reg; //
+            if (start && !pause) //error
             begin
                 state_nxt = START;
             end
+        end
+
+        STOP:
+        begin
+            
         end
     endcase
 end

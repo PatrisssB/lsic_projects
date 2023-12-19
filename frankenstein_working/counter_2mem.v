@@ -80,11 +80,12 @@ begin
     if (mem_read)
     begin
         case (mem_address)
-            8'b0000_1000: // Read from pause address
+            8'b0000_0000: // Read from pause address
                 mem_data_read <= pause_mem_inst.data_out;
-            8'b0000_1001: // Read from instruction address
+                adress ++;
+            8'b0000_0001: // Read from instruction address
                 mem_data_read <= instruction_mem_inst.data_out;
-            // Add other cases as needed
+                instruction++;
             default: 
                 state_nxt = state_reg;
         endcase

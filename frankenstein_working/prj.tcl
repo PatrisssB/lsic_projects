@@ -7,7 +7,7 @@ set_global_assignment -name BDF_FILE example1.bdf
 set_global_assignment -name VERILOG_FILE top.v
 set_global_assignment -name SDC_FILE example1.sdc
 
-set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name TOP_LEVEL_ENTITY top_memory
 set_location_assignment -to clk PIN_AH10
 
 set_location_assignment PIN_B8 -to rst ;# PUSH BUTTON[0]
@@ -60,6 +60,7 @@ set_location_assignment PIN_D22 -to segment4[7] ;# HEX3[7]
 set_location_assignment PIN_P11 -to clk ;
 set_location_assignment PIN_C10 -to start ;
 set_location_assignment PIN_C11 -to pause ;
+set_location_assignment PIN_D12 -to stop ;
 #set_location_assignment PIN_B8 -to btn1 ;
 
 load_package flow
