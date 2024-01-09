@@ -23,46 +23,56 @@ module top_wishbone
   wire e1, e2, e3, e4, e5;
   wire [3:0] sec1, sec2, min1, min2;
 
-  wb_master_counter_wrapper counter_wrapper_inst 
-  (
+
+//counter wrapper instantiation
+wb_master_counter_wrapper counter_wrapper_inst 
+(
     .clk(clk),
     .rst(rst),
     .start(start),
     .pause(pause),
     .tick(e1),
     .unit_tick(e2),
-    // ... to be completed
+    .wb_adr_i(wb_addr),
+    .wb_dat_i(wb_data),
+    .wb_sel_i(wb_sel),
+    .wb_cyc_i(wb_cyc),
+    .wb_stb_i(wb_stb),
+    .wb_we_i(wb_we),
+    .wb_dat_o(wb_data_read),
+    .wb_ack_o(wb_ack)
+);
 
-  wb_slave_timer_wrapper timer_wrapper_inst 
-  (
+//timer Wrapper instantiation
+wb_slave_timer_wrapper timer_wrapper_inst (
     .clk(clk),
     .rst(rst),
     .enable(e1),
     .display_time_digit(sec1),
     .tick(e2),
-    // ... to be completed
-  );
+    .wb_adr_i(wb_addr),
+    .wb_dat_i(wb_data),
+    .wb_sel_i(wb_sel),
+    .wb_cyc_i(wb_cyc),
+    .wb_stb_i(wb_stb),
+    .wb_we_i(wb_we),
+    .wb_dat_o(wb_data_read),
+    .wb_ack_o(wb_ack)
+);
 
-  // do the instantiation (glue logic)
-  // wire [31:0] wb_addr;
-  // wire [31:0] wb_data;
-  // wire [3:0] wb_sel;
-  // wire wb_cyc, wb_stb, wb_we;
-  // wire [31:0] wb_data_read;
-  // wire wb_ack;
 
-  // connect Wishbone signals to counter and timer wrappers
-  // assign wb_addr = ...;  // Specify the address based on the specifications
-  // assign wb_data = ...;  // Specify the data based on the specifications
-  // assign wb_sel = ...;   // Specify the select lines based on the specifications
-  // assign wb_cyc = ...;   // Specify the cycle signal based on the specifications
-  // assign wb_stb = ...;   // Specify the strobe signal based on the specifications
-  // assign wb_we = ...;    // Specify the write enable signal based on the specifications
+// connect Wishbone signals to counter and timer wrappers
+assign wb_addr = (counter_wrapper_inst.wb_cyc) ? counter_wrapper_inst.wb_addr : timer_wrapper_inst.wb_addr;
+assign wb_data = (counter_wrapper_inst.wb_cyc) ? counter_wrapper_inst.wb_data : timer_wrapper_inst.wb_data;
+assign wb_sel = (counter_wrapper_inst.wb_cyc) ? counter_wrapper_inst.wb_sel : timer_wrapper_inst.wb_sel;
+assign wb_cyc = counter_wrapper_inst.wb_cyc | timer_wrapper_inst.wb_cyc;
+assign wb_stb = counter_wrapper_inst.wb_stb | timer_wrapper_inst.wb_stb;
+assign wb_we = counter_wrapper_inst.wb_we | timer_wrapper_inst.wb_we;
 
-  // assign ... = wb_data_read;  // Specify connections for reading data from Wishbone
-  // assign ... = wb_ack;        // Specify connection for acknowledging Wishbone transactions
+assign wb_data_read = (counter_wrapper_inst.wb_cyc) ? counter_wrapper_inst.wb_data_read : timer_wrapper_inst.wb_data_read;
+assign wb_ack = (counter_wrapper_inst.wb_cyc) ? counter_wrapper_inst.wb_ack : timer_wrapper_inst.wb_ack;
 
-  // ... (other Wishbone bus connector connections)
+
 
   segment #(.DOT(1)) display_sec1 (.dig(sec1), .dig_out(segment1));
   segment #(.DOT(1)) display_sec2 (.dig(sec2), .dig_out(segment2));

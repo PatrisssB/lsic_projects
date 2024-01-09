@@ -33,8 +33,9 @@ memory #(8, 8) mem_inst
     .rd_wr_en(mem_write),
     .data_in(counter_reg),
     .addr(pause_address),
-    .data_out()
+    .data_out(mem_data_read)
 );
+
 
 always @(posedge clk or negedge rst) 
 begin
